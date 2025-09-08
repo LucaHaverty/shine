@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <WiFi.h>
+#include <ArduinoJson.h>
 #include <HTTPClient.h>
-#include <ArduinoJson.h>  // Optional, for parsing JSON easily
 
 // Replace with your Wi-Fi credentials
 const char* ssid = "Ivonhouse2";
@@ -45,8 +45,6 @@ void loop() {
             Serial.println("Response:");
             Serial.println(payload);
 
-            // Optional: parse JSON using ArduinoJson
-
             JsonDocument doc;
             DeserializationError error = deserializeJson(doc, payload);
             if (!error) {
@@ -59,7 +57,6 @@ void loop() {
                 Serial.print("JSON parse error: ");
                 Serial.println(error.c_str());
             }
-
         } else {
             Serial.print("Error on HTTP request: ");
             Serial.println(httpResponseCode);
