@@ -3,24 +3,26 @@
 #include <ArduinoJson.h>
 #include <HTTPClient.h>
 
-// Replace with your Wi-Fi credentials
-const char* ssid = "Ivonhouse2";
-const char* password = "eamonlucarule.22";
+// // Replace with your Wi-Fi credentials
+const char* ssid = "sexybeavers";
+const char* password = "supersecretpassword";
 
-#define LED_PIN 32
+#define COOL_PIN 21
+#define WARM_PIN 15
 
-// API endpoint
+// // API endpoint
 const char* apiUrl =
-    "https://improvements-deleted-supported-refurbished.trycloudflare.com/api/"
-    "light";
+    "http://localhost:3000/api/get-component-data?componentkey=ring-light";
 
 void setup() {
-    pinMode(LED_PIN, OUTPUT);
-    // TODO: starts on
-    digitalWrite(LED_PIN, HIGH);
+    pinMode(COOL_PIN, OUTPUT);
+    pinMode(WARM_PIN, OUTPUT);
+
+    analogWrite(COOL_PIN, 0);
+    analogWrite(WARM_PIN, 0);
 
     Serial.begin(115200);
-    while (!Serial) continue;
+    // while (!Serial) continue;
 
     // Connect to Wi-Fi
     Serial.print("Connecting to Wi-Fi");
@@ -48,11 +50,15 @@ void loop() {
             JsonDocument doc;
             DeserializationError error = deserializeJson(doc, payload);
             if (!error) {
-                const bool value = doc["light"].as<bool>();
+                const bool cool = doc["cool"].as<bool>();
+                const bool warm = doc["warm"].as<bool>();
                 Serial.print("Value: ");
-                Serial.println(value);
+                Serial.print(cool);
+                Serial.print(" ");
+                Serial.println(warm);
 
-                digitalWrite(LED_PIN, value ? HIGH : LOW);
+                digitalWrite(COOL_PIN, cool ? HIGH : LOW);
+                digitalWrite(WARM_PIN, cool ? HIGH : LOW);
             } else {
                 Serial.print("JSON parse error: ");
                 Serial.println(error.c_str());
@@ -67,5 +73,21 @@ void loop() {
         Serial.println("Wi-Fi disconnected, retrying...");
     }
 
-    delay(300);  // Wait 5 seconds before next request
+    delay(300);
+
+    // digitalWrite(LED_PIN, LOW);
+    // Serial.println("STARTING CYCLE");
+
+    // analogWrite(LED_PIN, 0);
+
+    // delay(2000);
+    // analogWrite(LED_PIN, 3);
+
+    // delay(2000);
+    // analogWrite(LED_PIN, 5);
+
+    // delay(2000);
+    // analogWrite(LED_PIN, 7);
+
+    // delay(2000);
 }

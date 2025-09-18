@@ -1,0 +1,20 @@
+meta {
+  name: Set component data
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/api/set-component-data
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "ring-light": {
+      "brightness": "0.7",
+      "color": "0.5"
+    }
+  }
+}

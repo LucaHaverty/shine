@@ -1,0 +1,15 @@
+meta {
+  name: get-component-data
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:3000/api/get-component-data
+  body: none
+  auth: inherit
+}
+
+headers {
+  component-key: ring-light
+}
